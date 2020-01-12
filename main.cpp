@@ -313,59 +313,17 @@ vector<vector<double>> SubMatrixs(vector<vector<double>> mat1, vector<vector<dou
 }
 
 void Setup(){
-    vector<double> temp1;
-    temp1.clear();
-    temp1.push_back(-1);
-    temp1.push_back(-1);
-    temp1.push_back(-1);
-    points.push_back(temp1);
-    temp1.clear();
-    temp1.push_back(1);
-    temp1.push_back(-1);
-    temp1.push_back(-1);
-    points.push_back(temp1);
-    temp1.clear();
-    temp1.push_back(1);
-    temp1.push_back(1);
-    temp1.push_back(-1);
-    points.push_back(temp1);
-    temp1.clear();
-    temp1.push_back(-1);
-    temp1.push_back(1);
-    temp1.push_back(-1);
-    points.push_back(temp1);
-    temp1.clear();
-    temp1.push_back(-1);
-    temp1.push_back(-1);
-    temp1.push_back(1);
-    points.push_back(temp1);
-    temp1.clear();
-    temp1.push_back(1);
-    temp1.push_back(-1);
-    temp1.push_back(1);
-    points.push_back(temp1);
-    temp1.clear();
-    temp1.push_back(1);
-    temp1.push_back(1);
-    temp1.push_back(1);
-    points.push_back(temp1);
-    temp1.clear();
-    temp1.push_back(-1);
-    temp1.push_back(1);
-    temp1.push_back(1);
-    points.push_back(temp1);
-    temp1.clear();
-
-    temp1.push_back(1);
-    temp1.push_back(0);
-    temp1.push_back(0);
-    projection.push_back(temp1);
-    temp1.clear();
-    temp1.push_back(0);
-    temp1.push_back(1);
-    temp1.push_back(0);
-    projection.push_back(temp1);
-    temp1.clear();
+    points.push_back({-1, -1, -1});
+    points.push_back({1, -1, -1});
+    points.push_back({1, 1, -1});
+    points.push_back({-1, 1, -1});
+    points.push_back({-1, -1, 1});
+    points.push_back({1, -1, 1});
+    points.push_back({1, 1, 1});
+    points.push_back({-1, 1, 1});
+    
+    projection.push_back({1, 0, 0});
+    projection.push_back({0, 1, 0});
 }
 
 void Rots(){
