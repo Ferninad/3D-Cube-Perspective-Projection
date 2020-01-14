@@ -231,50 +231,22 @@ void Connect(int i, int j, vector<vector<double>> pps){
     int iy = pps[i][1] * 200 + screenHeight / 2;
     int jx = pps[j][0] * 200 + screenWidth / 2;
     int jy = pps[j][1] * 200 + screenHeight / 2;
-    double slope = static_cast<double>((jy - iy)) / (jx - ix);
     double ang = atan2((jy - iy), (jx - ix));
-    double slopex = cos(ang);
-    if(jx > ix && abs(slope) < 40){
-        for(double x = jx; x >= ix; x-=abs(slopex)){
-            pos.x = x + (cornerSize - lineSize) / 2;
-            pos.y = slope * x + slope * (-1 * jx) + jy + (cornerSize - lineSize) / 2;
-            pos.w = lineSize;
-            pos.h = lineSize;
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-            SDL_RenderFillRect(renderer, &pos);
-        }
-    }
-    else if(jx < ix && abs(slope) < 40){
-        for(double x = jx; x <= ix; x+=abs(slopex)){
-            pos.x = x + (cornerSize - lineSize) / 2;
-            pos.y = slope * x + slope * (-1 * jx) + jy + (cornerSize - lineSize) / 2;
-            pos.w = lineSize;
-            pos.h = lineSize;
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-            SDL_RenderFillRect(renderer, &pos);
-        }
-    }
-    else{
-        if(jy < iy){
-            for(double y = jy; y != iy; y+=1){
-                pos.x = jx + (cornerSize - lineSize) / 2;
-                pos.y = y + (cornerSize - lineSize) / 2;
-                pos.w = lineSize;
-                pos.h = lineSize;
-                SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-                SDL_RenderFillRect(renderer, &pos);
-            }
-        }
-        else if(jy > iy){
-            for(double y = jy; y != iy; y-=1){
-                pos.x = jx + (cornerSize - lineSize) / 2;
-                pos.y = y + (cornerSize - lineSize) / 2;
-                pos.w = lineSize;
-                pos.h = lineSize;
-                SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-                SDL_RenderFillRect(renderer, &pos);
-            }
-        }
+    double cx = cos(ang);
+    double cy = sin(ang);
+    double x = static_cast<double>(ix);
+    double y = static_cast<double>(iy);
+    while(static_cast<int>(x) != jx || static_cast<int>(y) != jy){
+        if(static_cast<int>(x) != jx)
+            x += cx;
+        if(static_cast<int>(y) != jy)
+            y += cy;
+        pos.x = static_cast<int>(x);
+        pos.y = static_cast<int>(y);
+        pos.w = lineSize;
+        pos.h = lineSize;
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderFillRect(renderer, &pos);
     }
 }
 
