@@ -231,23 +231,8 @@ void Connect(int i, int j, vector<vector<double>> pps){
     int iy = pps[i][1] * 200 + screenHeight / 2;
     int jx = pps[j][0] * 200 + screenWidth / 2;
     int jy = pps[j][1] * 200 + screenHeight / 2;
-    double ang = atan2((jy - iy), (jx - ix));
-    double cx = cos(ang);
-    double cy = sin(ang);
-    double x = static_cast<double>(ix);
-    double y = static_cast<double>(iy);
-    while(static_cast<int>(x) != jx || static_cast<int>(y) != jy){
-        if(static_cast<int>(x) != jx)
-            x += cx;
-        if(static_cast<int>(y) != jy)
-            y += cy;
-        pos.x = static_cast<int>(x);
-        pos.y = static_cast<int>(y);
-        pos.w = lineSize;
-        pos.h = lineSize;
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderFillRect(renderer, &pos);
-    }
+
+    SDL_RenderDrawLine(renderer, ix, iy, jx, jy);
 }
 
 vector<vector<double>> MultMatrixs(vector<vector<double>> mat1, vector<vector<double>> mat2){
