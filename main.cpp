@@ -21,7 +21,6 @@ SDL_Rect pos;
 int screenWidth = 500;
 int screenHeight = 500;
 int cornerSize = 1;
-int lineSize = 1;
 double xang = 0;
 double yang = 0;
 double zang = 0;
