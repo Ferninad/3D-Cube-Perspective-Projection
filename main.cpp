@@ -153,6 +153,18 @@ void Run()
                     case SDLK_ESCAPE:
                         gameLoop = false;
                         break;
+                    case SDLK_RIGHT:
+                        ay += .01;
+                        break;
+                    case SDLK_LEFT:
+                        ay -= .01;
+                        break;
+                    case SDLK_UP:
+                        ax += .01;
+                        break;
+                    case SDLK_DOWN:
+                        ax -= .01;
+                        break;
                     case SDLK_w:
                         cz -= .05;
                         break;
@@ -170,12 +182,6 @@ void Run()
                         break;
                     case SDLK_q:
                         cy -= .05;
-                        break;
-                    case SDLK_RIGHT:
-                        yang -= .05;
-                        break;
-                    case SDLK_LEFT:
-                        yang += .05;
                         break;
                     default:
                         break;
@@ -206,7 +212,7 @@ void Draw(){
         rotated = MultMatrixs(rotx, rotated);
         rotated = MultMatrixs(rotz, rotated);
         vector<vector<double>> diffpc = SubMatrixs(rotated, cameraPosition);
-        vector<vector<double>> transform = MultMatrixs(diffpc, camrotx);
+        vector<vector<double>> transform = MultMatrixs(camrotx, diffpc);
         transform = MultMatrixs(camroty, transform);
         transform = MultMatrixs(camrotz, transform);
         pps.push_back({(display[2][0] / transform[2][0]) * transform[0][0] + display[0][0], (display[2][0] / transform[2][0]) * transform[1][0] + display[1][0]});
@@ -233,15 +239,15 @@ void Connect(int i, int j, vector<vector<double>> pps){
 
     SDL_RenderDrawLine(renderer, ix, iy, jx, jy);
 }
-
+ 
 vector<vector<double>> MultMatrixs(vector<vector<double>> mat1, vector<vector<double>> mat2){
     vector<vector<double>> result;
     vector<double> temp;
     double a = 0;
-    for(int j = 0; j < mat1.size(); j++){
-        for(int k = 0; k < mat2[0].size(); k++){
-            for(int i = 0; i < mat1[j].size(); i++){
-                a+= mat1[j][i] * mat2[i][k];
+    for(int i = 0; i < mat1.size(); i++){
+        for(int j = 0; j < mat2[0].size(); j++){
+            for(int k = 0; k < mat1[i].size(); k++){
+                a += mat1[i][k] * mat2[k][j];
             }
             temp.push_back(a);
             a = 0;
