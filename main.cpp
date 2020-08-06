@@ -6,11 +6,11 @@ bool Init();
 void CleanUp();
 void Run();
 void Draw();
-void Connect(int i, int j, vector<vector<double>> pps);
+void Connect(int i, int j, vector<vector<double>> &pps);
 void Rots();
 void Setup();
-vector<vector<double>> MultMatrixs(vector<vector<double>> mat1, vector<vector<double>> mat2);
-vector<vector<double>> SubMatrixs(vector<vector<double>> mat1, vector<vector<double>> mat2);
+vector<vector<double>> MultMatrixs(vector<vector<double>> &mat1, vector<vector<double>> &mat2);
+vector<vector<double>> SubMatrixs(vector<vector<double>> &mat1, vector<vector<double>> &mat2);
 
 SDL_Window *window;
 SDL_GLContext glContext;
@@ -26,7 +26,7 @@ double yang = 0;
 double zang = 0;
 double cx = 0;
 double cy = 0;
-double cz = 5;
+double cz = 1000;
 double ax = 0;
 double ay = 0;
 double az = 0;
@@ -127,7 +127,7 @@ void Run()
     Rots();
     display.push_back({0});
     display.push_back({0});
-    display.push_back({1});
+    display.push_back({200});
 
     while (gameLoop)
     {   
@@ -153,6 +153,12 @@ void Run()
                     case SDLK_ESCAPE:
                         gameLoop = false;
                         break;
+                    case SDLK_r: //cc
+                        az += .01;
+                        break;
+                    case SDLK_f: //clockwise
+                        az -= .01;
+                        break;
                     case SDLK_RIGHT:
                         ay += .01;
                         break;
@@ -166,22 +172,22 @@ void Run()
                         ax -= .01;
                         break;
                     case SDLK_w:
-                        cz -= .05;
+                        cz -= 10;
                         break;
                     case SDLK_s:
-                        cz += .05;
+                        cz += 10;
                         break;
                     case SDLK_d:
-                        cx -= .05;
+                        cx -= 10;
                         break;
                     case SDLK_a:
-                        cx += .05;
+                        cx += 10;
                         break;
                     case SDLK_e:
-                        cy += .05;
+                        cy += 10;
                         break;
                     case SDLK_q:
-                        cy -= .05;
+                        cy -= 10;
                         break;
                     default:
                         break;
@@ -217,8 +223,8 @@ void Draw(){
         transform = MultMatrixs(camrotz, transform);
         pps.push_back({(display[2][0] / transform[2][0]) * transform[0][0] + display[0][0], (display[2][0] / transform[2][0]) * transform[1][0] + display[1][0]});
         
-        pos.x = pps[i][0] * 200 + screenWidth / 2;
-        pos.y = pps[i][1] * 200 + screenHeight / 2;
+        pos.x = pps[i][0] + screenWidth / 2;
+        pos.y = pps[i][1] + screenHeight / 2;
         pos.w = cornerSize;
         pos.h = cornerSize;
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -231,16 +237,16 @@ void Draw(){
     }
 }
 
-void Connect(int i, int j, vector<vector<double>> pps){
-    int ix = pps[i][0] * 200 + screenWidth / 2;
-    int iy = pps[i][1] * 200 + screenHeight / 2;
-    int jx = pps[j][0] * 200 + screenWidth / 2;
-    int jy = pps[j][1] * 200 + screenHeight / 2;
+void Connect(int i, int j, vector<vector<double>> &pps){
+    int ix = pps[i][0] + screenWidth / 2;
+    int iy = pps[i][1] + screenHeight / 2;
+    int jx = pps[j][0] + screenWidth / 2;
+    int jy = pps[j][1] + screenHeight / 2;
 
     SDL_RenderDrawLine(renderer, ix, iy, jx, jy);
 }
  
-vector<vector<double>> MultMatrixs(vector<vector<double>> mat1, vector<vector<double>> mat2){
+vector<vector<double>> MultMatrixs(vector<vector<double>> &mat1, vector<vector<double>> &mat2){
     vector<vector<double>> result;
     vector<double> temp;
     double a = 0;
@@ -258,7 +264,7 @@ vector<vector<double>> MultMatrixs(vector<vector<double>> mat1, vector<vector<do
     return result;
 }
 
-vector<vector<double>> SubMatrixs(vector<vector<double>> mat1, vector<vector<double>> mat2){
+vector<vector<double>> SubMatrixs(vector<vector<double>> &mat1, vector<vector<double>> &mat2){
     vector<vector<double>> result;
     vector<double> temp;
     double a = 0;
@@ -275,14 +281,14 @@ vector<vector<double>> SubMatrixs(vector<vector<double>> mat1, vector<vector<dou
 }
 
 void Setup(){
-    points.push_back({-1, -1, -1});
-    points.push_back({1, -1, -1});
-    points.push_back({1, 1, -1});
-    points.push_back({-1, 1, -1});
-    points.push_back({-1, -1, 1});
-    points.push_back({1, -1, 1});
-    points.push_back({1, 1, 1});
-    points.push_back({-1, 1, 1});
+    points.push_back({-200, -200, -200});
+    points.push_back({200, -200, -200});
+    points.push_back({200, 200, -200});
+    points.push_back({-200, 200, -200});
+    points.push_back({-200, -200, 200});
+    points.push_back({200, -200, 200});
+    points.push_back({200, 200, 200});
+    points.push_back({-200, 200, 200});
     
     projection.push_back({1, 0, 0});
     projection.push_back({0, 1, 0});
